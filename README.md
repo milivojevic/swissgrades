@@ -1,93 +1,170 @@
-# Swiss Primary School Grading System Visualizer
+# 🇨🇭 Swiss Grading Visualizer
 
-Interactive web application for visualizing different grading models used in Swiss primary schools.
+> Interactive visualization tool for Swiss grading system calculations deployed on Cloudflare Workers
 
-🌐 **Live**: https://swissgrades.cheddar.workers.dev
+[![Live Demo](https://img.shields.io/badge/demo-live-success?style=for-the-badge)](https://swissgrades.cheddar.workers.dev)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0.4-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-## Quick Start
+## 🎯 What It Does
+
+An educational tool that visualizes how different Swiss grading models calculate final grades from raw points. Compare two models side-by-side:
+
+- **Inclusive Model**: Traditional rounding to nearest half-grade
+- **Abrunden Model**: Conservative rounding down (floor)
+
+Perfect for teachers, students, and education administrators who need to understand or demonstrate grading calculations.
+
+## ✨ Features
+
+- 📊 **Interactive Charts**: Hover over data points to see grade bands
+- 📱 **Fully Responsive**: Desktop side-by-side, mobile full-screen pagination
+- 🎨 **Color-Coded**: Red for failing (<4), yellow-green for passing (≥4)
+- 💾 **Persistent Settings**: Your preferences saved locally
+- ⌨️ **Keyboard Navigation**: Arrow keys for quick comparison
+- 📥 **Export Charts**: Download as PNG images
+- 🌐 **Global CDN**: Fast loading worldwide via Cloudflare edge network
+
+## 🚀 Quick Start
+
+### Run Locally
 
 ```bash
 # Install dependencies
 npm install
 
-# Run locally
+# Start development server
 npm run start
-# Opens at http://localhost:8787
 
-# Deploy to Cloudflare
+# Visit http://localhost:8787
+```
+
+### Deploy to Cloudflare Workers
+
+```bash
+# Authenticate (first time only)
+npx wrangler login
+
+# Deploy to production
 npm run deploy
 ```
 
-## What It Does
+## 📖 Documentation
 
-Compares two grading approaches:
-1. **Inclusive** - Standard rounding (4.25 → 4.5)
-2. **Exclusive (Abrunden)** - Always rounds down (4.25 → 4.0)
+- **[Quick Reference](README.md)** - You are here!
+- **[Complete Guide](DOCUMENTATION.md)** - 500+ line beginner-friendly guide
+- **[Development Log](DEVLOG.md)** - Full development journey with technical decisions
+- **[Grading Models](GRADING_MODELS.md)** - Swiss grading system explanation
 
-Shows:
-- Interactive color-coded charts
-- Grade band analysis  
-- Fairness metrics
-- Point-to-grade conversion tables
-
-## Project Structure
+## 🏗️ Architecture
 
 ```
-├── package.json          # Dependencies
-├── wrangler.toml         # Cloudflare config
-├── src/index.ts          # Worker entry
-└── static/               # Frontend
-    ├── index.html        # Structure
-    ├── styles.css        # Styling
-    ├── main.js           # UI logic
-    └── grading.js        # Calculations
+swissgrades/
+├── src/
+│   └── index.ts              # Cloudflare Worker entry point
+├── static/
+│   ├── index.html            # Application structure
+│   ├── styles.css            # Responsive design
+│   ├── grading.js            # Grade calculation logic
+│   ├── main.js               # UI orchestration
+│   └── favicon.svg           # Swiss flag icon
+├── wrangler.toml             # Cloudflare configuration
+├── package.json              # Dependencies
+└── tsconfig.json             # TypeScript config
 ```
 
-## Documentation
+## 🛠️ Tech Stack
 
-See **[DOCUMENTATION.md](./DOCUMENTATION.md)** for comprehensive guide covering:
-- Complete file-by-file breakdown
-- Technology stack explanations  
-- Development setup for beginners
-- Deployment instructions
-- How to learn more
+| Technology | Purpose |
+|------------|---------|
+| **Cloudflare Workers** | Edge deployment, global CDN |
+| **Plotly.js** | Interactive data visualization |
+| **Vanilla JavaScript** | Client-side calculations |
+| **TypeScript** | Development-time type safety |
+| **CSS Grid** | Responsive layout |
+| **ES6 Modules** | Code organization |
 
-## Features
+## 📐 Grading Models
 
-✅ Responsive design (desktop/mobile)  
-✅ Interactive hover tooltips  
-✅ Persistent settings (cookies)  
-✅ Keyboard + swipe navigation  
-✅ Real-time updates with debouncing  
-✅ Downloadable charts (PNG)  
+### Inclusive Model (Traditional)
+```javascript
+// Linear interpolation between PPP→4.0 and MP→6.0
+// Round to nearest half-grade (0.5, 1.0, 1.5, etc.)
+roundingMode: "nearest"
+```
 
-## Tech Stack
+### Abrunden Model (Conservative)
+```javascript
+// Same interpolation
+// Round DOWN to lower half-grade (floor)
+roundingMode: "floor"
+```
 
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **Charts**: Plotly.js 2.35.2
-- **Backend**: Cloudflare Workers (Serverless)
-- **Tools**: Node.js, npm, Wrangler
+Both models use the same linear interpolation formula but differ in final rounding behavior. See [GRADING_MODELS.md](GRADING_MODELS.md) for detailed explanation.
 
-## Development
+## 🎓 Use Cases
 
-Built with human expertise + GitHub Copilot AI assistance.
+- **Teachers**: Understand how grading policies affect student outcomes
+- **Students**: Visualize what points are needed for target grades
+- **Administrators**: Compare fairness of different grading approaches
+- **Education Research**: Analyze grading system properties
 
-### Local Development
+## 🧪 Example Scenarios
 
-Changes auto-reload when you edit files in `static/`.
+Try these configurations to explore the models:
 
-### Adding Comments
+1. **Standard Test**
+   - MP: 23 points, PPP: 13 points, Granularity: 0.5
 
-See code files for extensive inline documentation explaining:
-- What each function does
-- Why design decisions were made
-- How calculations work
-- Examples of expected behavior
+2. **Strict Grading**
+   - MP: 100 points, PPP: 60 points, Granularity: 0.5
 
-## License
+3. **Fine Gradations**
+   - MP: 20 points, PPP: 12 points, Granularity: 0.25
 
-Educational use. Built to help Swiss educators understand grading system impacts.
+## 🌍 Live Demo
+
+**Production URL**: https://swissgrades.cheddar.workers.dev
+
+Hosted on Cloudflare's global edge network with automatic HTTPS and caching.
+
+## 🤝 Contributing
+
+This project was developed through human-AI collaboration with GitHub Copilot. Contributions welcome!
+
+### Development Workflow
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes with clear commits
+4. Test locally: `npm run start`
+5. Push to your fork: `git push origin feature/amazing-feature`
+6. Open a Pull Request
+
+### Code Style
+
+- ES6+ JavaScript with modern syntax
+- Clear function names and comments
+- Single responsibility principle
+- Responsive design first
+
+## 📝 License
+
+This project is open source and available for educational purposes.
+
+## 🙏 Acknowledgments
+
+- **Swiss Education System**: For the grading model specifications
+- **Plotly.js**: For excellent visualization capabilities
+- **Cloudflare Workers**: For edge computing infrastructure
+- **GitHub Copilot**: For AI-assisted development
+
+## 📧 Contact
+
+Questions or feedback? Open an issue on GitHub or visit the [live demo](https://swissgrades.cheddar.workers.dev).
 
 ---
 
-*For complete beginner-friendly guide: [DOCUMENTATION.md](./DOCUMENTATION.md)*
+**Built with** ❤️ **and** 🤖 **through human-AI collaboration**
+
+*Last updated: November 1, 2025*
