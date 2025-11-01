@@ -1,0 +1,355 @@
+/* static/styles.css */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+h1 {
+    color: #1a1a1a;
+    margin: 0;
+    font-size: 1.2rem;
+    padding: 0;
+    margin-right: 20px;
+    font-weight: 600;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Pagination container */
+.visualizations {
+    position: relative;
+    flex: 1;
+    padding: 20px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Navigation */
+.nav-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.nav-btn {
+    padding: 8px 20px;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: #0052a3;
+}
+
+.nav-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.page-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ccc;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.dot.active {
+    background: #0066cc;
+}
+
+.form-container {
+    background: #fff;
+    padding: 8px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#grading-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#grading-form label {
+    font-weight: bold;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    margin-left: 8px;
+}
+
+#grading-form label:first-of-type {
+    margin-left: 0;
+}
+
+#grading-form input,
+#grading-form select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    width: 65px;
+}
+
+#grading-form select {
+    width: 105px;
+}
+
+.visualizations {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.model-viz {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 15px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: calc(100vh - 140px); /* Use full viewport minus header and nav */
+}
+
+/* Mobile: Stack chart and table vertically, each taking full screen */
+@media (max-width: 768px) {
+    .visualizations {
+        padding: 0;
+    }
+    
+    .model-viz {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 0;
+        gap: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    .chart {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        background: #fff;
+    }
+    
+    .grade-bands {
+        min-height: 100vh;
+        padding: 20px;
+        background: #fff;
+    }
+    
+    /* Hide detail tables on mobile */
+    .detail-tables {
+        display: none !important;
+    }
+    
+    .table-container {
+        display: none !important;
+    }
+    
+    .nav-controls {
+        bottom: 10px;
+        padding: 8px 15px;
+    }
+    
+    .nav-btn {
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+    
+    .page-indicator {
+        font-size: 12px;
+    }
+}
+
+.chart {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart > div {
+    flex: 1;
+    min-height: 0;
+}
+
+.grade-bands {
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.grade-bands h4 {
+    margin: 0 0 10px 0;
+    font-size: 0.95rem;
+    color: #555;
+    flex-shrink: 0;
+}
+
+.grade-bands table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    flex-grow: 1;
+}
+
+.grade-bands th {
+    background: #f5f5f5;
+    padding: 4px 6px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.7rem;
+    border-bottom: 2px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.grade-bands td {
+    padding: 5px 6px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 0.75rem;
+}
+
+.grade-bands tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    cursor: pointer;
+}
+
+.grade-bands .grade-cell {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.grade-bands .width-cell {
+    color: #666;
+    font-style: italic;
+}
+
+.detail-tables {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 80px; /* Space for nav controls */
+}
+
+.table-container {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.table h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+th, td {
+    padding: 6px 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+td {
+    font-family: 'Courier New', monospace;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Position Plotly modebar in top-left corner */
+.chart .modebar {
+    left: 5px !important;
+    right: auto !important;
+    top: 5px !important;
+    z-index: 1000 !important;
+}
+
+.chart .modebar-group {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.chart .modebar-btn {
+    display: block !important;
+}
+
+.chart svg.main-svg {
+    position: relative;
+    z-index: 1;
+}

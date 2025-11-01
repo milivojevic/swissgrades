@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Wrangler
+.wrangler/
+wrangler.toml.backup
+
+# Build outputs
+dist/
+*.log
+
+# Environment files
+.env
+.env.local
+.dev.vars
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.backup
+*~
+
+# TypeScript
+*.tsbuildinfo

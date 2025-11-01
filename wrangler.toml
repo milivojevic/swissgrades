@@ -1,0 +1,7 @@
+name = "swissgrades"
+main = "src/index.ts"
+compatibility_date = "2024-04-05"
+
+# Workers Assets - serves static files from ./static
+# https://developers.cloudflare.com/workers/configuration/sites/
+assets = { directory = "./static", binding = "ASSETS" }

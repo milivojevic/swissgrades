@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiss Primary School Grading System Visualizer</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23FF0000'/><rect x='13' y='6' width='6' height='20' fill='white'/><rect x='6' y='13' width='20' height='6' fill='white'/></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form id="grading-form">
+                <h1>Swiss Grading Visualizer</h1>
+                <label for="max-points">MP:</label>
+                <input type="number" id="max-points" name="max-points" value="25" step="0.5" required>
+
+                <label for="passing-points">PPP:</label>
+                <input type="number" id="passing-points" name="passing-points" value="12.5" step="0.5" required>
+
+                <label for="grade-granularity">Granularity:</label>
+                <select id="grade-granularity" name="grade-granularity">
+                    <option value="1">Full Grades</option>
+                    <option value="0.5" selected>Half Grades</option>
+                    <option value="0.25">Quarter Grades</option>
+                    <option value="0.1">Tenths</option>
+                </select>
+                
+                <label for="enable-logging" style="margin-left: 20px;">Logging</label>
+                <input type="checkbox" id="enable-logging" name="enable-logging">
+            </form>
+        </div>
+
+        <div class="visualizations">
+            <!-- Page 1: Inclusive Model -->
+            <div class="page active" data-page="0">
+                <div class="model-viz">
+                    <div id="inclusive-chart" class="chart"></div>
+                    <div id="inclusive-bands" class="grade-bands"></div>
+                </div>
+                <div class="detail-tables">
+                    <div id="inclusive-table" class="table-container"></div>
+                </div>
+            </div>
+            
+            <!-- Page 2: Exclusive (Abrunden) Model -->
+            <div class="page" data-page="1">
+                <div class="model-viz">
+                    <div id="exclusive-(abrunden)-chart" class="chart"></div>
+                    <div id="exclusive-(abrunden)-bands" class="grade-bands"></div>
+                </div>
+                <div class="detail-tables">
+                    <div id="exclusive-(abrunden)-table" class="table-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+            <button class="nav-btn" id="prev-btn">← Previous</button>
+            <div class="page-indicator">
+                <span class="dot active" data-page="0"></span>
+                <span class="dot" data-page="1"></span>
+            </div>
+            <button class="nav-btn" id="next-btn">Next →</button>
+        </div>
+    </div>
+
+    <script src="main.js" type="module"></script>
+</body>
+</html>
