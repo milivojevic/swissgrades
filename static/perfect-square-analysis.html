@@ -329,7 +329,7 @@
 
         <div class="input-section">
             <label for="side-length">Enter the side length of a perfect square:</label>
-            <input type="number" id="side-length" value="20" min="1" step="1">
+            <input type="number" id="side-length" value="36" min="1" step="1">
             <button id="analyze-btn">Analyze Factorizations</button>
         </div>
 
@@ -385,7 +385,7 @@
                 </div>
             `;
 
-            // Bar chart
+            // Bar chart - Show both a×b and b×a for symmetric visualization
             html += `
                 <div class="chart-container">
                     <h3>Number of Identifiable Squares by Configuration</h3>
@@ -395,6 +395,8 @@
             for (const analysis of analyses) {
                 const percentage = (analysis.squareCount / maxSquares) * 100;
                 const isMax = analysis.squareCount === maxSquares;
+                
+                // Show a×b
                 html += `
                     <div class="bar-item">
                         <div class="bar-label">${analysis.a}×${analysis.b}</div>
@@ -405,6 +407,20 @@
                         </div>
                     </div>
                 `;
+                
+                // Show b×a if different (for symmetry)
+                if (analysis.a !== analysis.b) {
+                    html += `
+                        <div class="bar-item">
+                            <div class="bar-label">${analysis.b}×${analysis.a}</div>
+                            <div class="bar-wrapper">
+                                <div class="bar ${isMax ? 'highlight' : ''}" style="width: ${percentage}%">
+                                    ${analysis.squareCount} squares
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
             }
 
             html += `
