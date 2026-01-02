@@ -385,15 +385,18 @@
                 </div>
             `;
 
-            // Bar chart - Create symmetric visualization: a×b at top, b×a at bottom
+            // Bar chart - Create symmetric visualization: minima at edges, maxima in middle
             html += `
                 <div class="chart-container">
                     <h3>Number of Identifiable Squares by Configuration</h3>
                     <div class="bar-chart">
             `;
 
-            // First pass: show all a×b (ascending order)
-            for (const analysis of analyses) {
+            // Reverse the analyses array so we start with minimum (1×n)
+            const reversedAnalyses = [...analyses].reverse();
+            
+            // First pass: show all a×b in reverse order (ascending square count)
+            for (const analysis of reversedAnalyses) {
                 const percentage = (analysis.squareCount / maxSquares) * 100;
                 const isMax = analysis.squareCount === maxSquares;
                 
@@ -409,8 +412,8 @@
                 `;
             }
             
-            // Second pass: show all b×a in reverse order (descending), excluding squares
-            for (let i = analyses.length - 1; i >= 0; i--) {
+            // Second pass: show all b×a in forward order (descending square count), excluding squares
+            for (let i = 1; i < analyses.length; i++) {
                 const analysis = analyses[i];
                 // Skip if it's a square (a === b)
                 if (analysis.a === analysis.b) continue;
