@@ -385,18 +385,18 @@
                 </div>
             `;
 
-            // Bar chart - Show both a×b and b×a for symmetric visualization
+            // Bar chart - Create symmetric visualization: a×b at top, b×a at bottom
             html += `
                 <div class="chart-container">
                     <h3>Number of Identifiable Squares by Configuration</h3>
                     <div class="bar-chart">
             `;
 
+            // First pass: show all a×b (ascending order)
             for (const analysis of analyses) {
                 const percentage = (analysis.squareCount / maxSquares) * 100;
                 const isMax = analysis.squareCount === maxSquares;
                 
-                // Show a×b
                 html += `
                     <div class="bar-item">
                         <div class="bar-label">${analysis.a}×${analysis.b}</div>
@@ -407,20 +407,27 @@
                         </div>
                     </div>
                 `;
+            }
+            
+            // Second pass: show all b×a in reverse order (descending), excluding squares
+            for (let i = analyses.length - 1; i >= 0; i--) {
+                const analysis = analyses[i];
+                // Skip if it's a square (a === b)
+                if (analysis.a === analysis.b) continue;
                 
-                // Show b×a if different (for symmetry)
-                if (analysis.a !== analysis.b) {
-                    html += `
-                        <div class="bar-item">
-                            <div class="bar-label">${analysis.b}×${analysis.a}</div>
-                            <div class="bar-wrapper">
-                                <div class="bar ${isMax ? 'highlight' : ''}" style="width: ${percentage}%">
-                                    ${analysis.squareCount} squares
-                                </div>
+                const percentage = (analysis.squareCount / maxSquares) * 100;
+                const isMax = analysis.squareCount === maxSquares;
+                
+                html += `
+                    <div class="bar-item">
+                        <div class="bar-label">${analysis.b}×${analysis.a}</div>
+                        <div class="bar-wrapper">
+                            <div class="bar ${isMax ? 'highlight' : ''}" style="width: ${percentage}%">
+                                ${analysis.squareCount} squares
                             </div>
                         </div>
-                    `;
-                }
+                    </div>
+                `;
             }
 
             html += `
