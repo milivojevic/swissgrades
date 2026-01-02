@@ -45,15 +45,18 @@ export function countSquares(m: number, n: number): number {
 /**
  * Find all grid dimensions that contain exactly the target number of squares
  * @param targetCount - The desired number of squares
- * @param maxDimension - Maximum dimension to search (default: 100)
+ * @param maxDimension - Maximum dimension to search (default: targetCount, to include 1×n grids)
  * @returns Array of grid dimensions that contain exactly targetCount squares
  */
-export function findGridsWithSquares(targetCount: number, maxDimension: number = 100): GridDimensions[] {
+export function findGridsWithSquares(targetCount: number, maxDimension?: number): GridDimensions[] {
     const solutions: GridDimensions[] = [];
     
+    // Default maxDimension to targetCount to ensure 1×n grids are included
+    const searchLimit = maxDimension ?? targetCount;
+    
     // Search through all possible dimensions
-    for (let m = 1; m <= maxDimension; m++) {
-        for (let n = m; n <= maxDimension; n++) {
+    for (let m = 1; m <= searchLimit; m++) {
+        for (let n = m; n <= searchLimit; n++) {
             if (countSquares(m, n) === targetCount) {
                 // Add both orientations (m×n and n×m)
                 solutions.push({ width: n, height: m });

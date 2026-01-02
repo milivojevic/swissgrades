@@ -10,7 +10,7 @@
 
 ## Solution
 
-The answer is: **9×33, 33×9, 13×19, and 19×13 grids**
+The answer is: **1×1365, 1365×1, 9×33, 33×9, 13×19, and 19×13 grids**
 
 ## Mathematical Formula
 
