@@ -248,7 +248,7 @@
 
         <div class="problem-statement">
             <h2>Problem Statement</h2>
-            <p><strong>In a 3×6 grid, there are 32 smaller or bigger squares in total.</strong></p>
+            <p><strong>In a 3×6 grid, there are 32 squares of all sizes in total.</strong></p>
             <p><strong>In a 4×4 grid, there are 30 squares.</strong></p>
             <p><strong>In which grids can we count 1365 squares?</strong></p>
         </div>
@@ -386,7 +386,7 @@
 
         calculateBtn.addEventListener('click', () => {
             const targetCount = parseInt(targetInput.value);
-            if (targetCount > 0) {
+            if (!isNaN(targetCount) && targetCount > 0) {
                 displayResults(targetCount);
             }
         });
