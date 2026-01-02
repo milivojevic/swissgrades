@@ -71,6 +71,54 @@ export function findGridsWithSquares(targetCount: number, maxDimension?: number)
 }
 
 /**
+ * Find all factorizations of a number
+ * @param n - The number to factorize
+ * @returns Array of factor pairs {a, b} where a * b = n
+ */
+export function findFactorizations(n: number): Array<{a: number, b: number}> {
+    const factorizations: Array<{a: number, b: number}> = [];
+    
+    for (let i = 1; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+            factorizations.push({ a: i, b: n / i });
+        }
+    }
+    
+    return factorizations;
+}
+
+/**
+ * Analyze a perfect square area and find all possible grid configurations
+ * @param area - The area (number of unit squares)
+ * @returns Analysis of all factorizations with square counts
+ */
+export interface FactorizationAnalysis {
+    a: number;
+    b: number;
+    area: number;
+    squareCount: number;
+}
+
+export function analyzePerfectSquare(area: number): FactorizationAnalysis[] {
+    const factorizations = findFactorizations(area);
+    const analyses: FactorizationAnalysis[] = [];
+    
+    for (const {a, b} of factorizations) {
+        analyses.push({
+            a,
+            b,
+            area,
+            squareCount: countSquares(a, b)
+        });
+    }
+    
+    // Sort by square count descending
+    analyses.sort((x, y) => y.squareCount - x.squareCount);
+    
+    return analyses;
+}
+
+/**
  * Get detailed breakdown of squares by size in a grid
  * @param m - Grid height
  * @param n - Grid width

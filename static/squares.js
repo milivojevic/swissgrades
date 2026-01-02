@@ -52,6 +52,35 @@ export function findGridsWithSquares(targetCount, maxDimension) {
     return solutions;
 }
 /**
+ * Find all factorizations of a number
+ * @param n - The number to factorize
+ * @returns Array of factor pairs {a, b} where a * b = n
+ */
+export function findFactorizations(n) {
+    const factorizations = [];
+    for (let i = 1; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+            factorizations.push({ a: i, b: n / i });
+        }
+    }
+    return factorizations;
+}
+export function analyzePerfectSquare(area) {
+    const factorizations = findFactorizations(area);
+    const analyses = [];
+    for (const { a, b } of factorizations) {
+        analyses.push({
+            a,
+            b,
+            area,
+            squareCount: countSquares(a, b)
+        });
+    }
+    // Sort by square count descending
+    analyses.sort((x, y) => y.squareCount - x.squareCount);
+    return analyses;
+}
+/**
  * Get detailed breakdown of squares by size in a grid
  * @param m - Grid height
  * @param n - Grid width

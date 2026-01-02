@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Square Factorization Analysis</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23FF0000'/><rect x='13' y='6' width='6' height='20' fill='white'/><rect x='6' y='13' width='20' height='6' fill='white'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .info-box h2 {
+            color: #1976d2;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .info-box p {
+            color: #34495e;
+            margin-bottom: 8px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1.1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .results h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .summary h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .summary-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            color: #2c3e50;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bar-label {
+            min-width: 100px;
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: right;
+        }
+
+        .bar-wrapper {
+            flex: 1;
+            position: relative;
+            height: 40px;
+        }
+
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .bar:hover {
+            transform: scaleX(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .bar.highlight {
+            background: linear-gradient(90deg, #f39c12 0%, #e74c3c 100%);
+        }
+
+        .factorization-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .factorization-table th,
+        .factorization-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .factorization-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .factorization-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .factorization-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .factorization-table tr.highlight {
+            background: #fff3cd;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .formula-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .formula-box h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .observation {
+            background: #fff9e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .observation h3 {
+            color: #f57c00;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bar-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .bar-label {
+                text-align: left;
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Perfect Square Factorization Analysis</h1>
+        <p class="subtitle">Visualize how different grid configurations affect the number of identifiable squares</p>
+
+        <div class="info-box">
+            <h2>Concept</h2>
+            <p>For a given area (e.g., 400 unit squares from a 20×20 grid), there are multiple ways to arrange it as an a×b grid.</p>
+            <p>Each configuration results in a different number of identifiable squares of all sizes.</p>
+            <p><strong>Question:</strong> Which configuration maximizes the number of squares?</p>
+        </div>
+
+        <div class="input-section">
+            <label for="side-length">Enter the side length of a perfect square:</label>
+            <input type="number" id="side-length" value="20" min="1" step="1">
+            <button id="analyze-btn">Analyze Factorizations</button>
+        </div>
+
+        <div id="results" class="results hidden">
+            <h2>Analysis Results</h2>
+            <div id="results-content"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { countSquares, findFactorizations, analyzePerfectSquare } from './squares.js';
+
+        const sideLengthInput = document.getElementById('side-length');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const resultsDiv = document.getElementById('results');
+        const resultsContent = document.getElementById('results-content');
+
+        function displayResults(sideLength) {
+            const area = sideLength * sideLength;
+            const analyses = analyzePerfectSquare(area);
+            
+            resultsDiv.classList.remove('hidden');
+            
+            // Find max squares
+            const maxSquares = Math.max(...analyses.map(a => a.squareCount));
+            const maxConfig = analyses.find(a => a.squareCount === maxSquares);
+            
+            let html = `
+                <div class="summary">
+                    <h3>Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-label">Original Square</div>
+                            <div class="summary-value">${sideLength}×${sideLength}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Total Area</div>
+                            <div class="summary-value">${area}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Factorizations</div>
+                            <div class="summary-value">${analyses.length}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Maximum Squares</div>
+                            <div class="summary-value">${maxSquares}</div>
+                        </div>
+                    </div>
+                    <p style="color: #2c3e50; margin-top: 15px;">
+                        <strong>Optimal Configuration:</strong> ${maxConfig.a}×${maxConfig.b} 
+                        ${maxConfig.a === maxConfig.b ? '(Square configuration maximizes squares!)' : ''}
+                    </p>
+                </div>
+            `;
+
+            // Bar chart
+            html += `
+                <div class="chart-container">
+                    <h3>Number of Identifiable Squares by Configuration</h3>
+                    <div class="bar-chart">
+            `;
+
+            for (const analysis of analyses) {
+                const percentage = (analysis.squareCount / maxSquares) * 100;
+                const isMax = analysis.squareCount === maxSquares;
+                html += `
+                    <div class="bar-item">
+                        <div class="bar-label">${analysis.a}×${analysis.b}</div>
+                        <div class="bar-wrapper">
+                            <div class="bar ${isMax ? 'highlight' : ''}" style="width: ${percentage}%">
+                                ${analysis.squareCount} squares
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += `
+                    </div>
+                </div>
+            `;
+
+            // Table
+            html += `
+                <div class="chart-container">
+                    <h3>Detailed Factorization Table</h3>
+                    <table class="factorization-table">
+                        <thead>
+                            <tr>
+                                <th>Configuration</th>
+                                <th>Area (a × b)</th>
+                                <th>Identifiable Squares</th>
+                                <th>Efficiency</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            for (const analysis of analyses) {
+                const efficiency = ((analysis.squareCount / area) * 100).toFixed(1);
+                const isMax = analysis.squareCount === maxSquares;
+                html += `
+                    <tr class="${isMax ? 'highlight' : ''}">
+                        <td><strong>${analysis.a} × ${analysis.b}</strong></td>
+                        <td>${analysis.a} × ${analysis.b} = ${area}</td>
+                        <td>${analysis.squareCount}</td>
+                        <td>${efficiency}%</td>
+                    </tr>
+                `;
+            }
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            // Generic formulas
+            html += `
+                <div class="formula-box">
+                    <h3>📐 Generic Formulas</h3>
+                    <p><strong>For an m×n grid, the total number of identifiable squares is:</strong></p>
+                    <div class="formula">
+                        S(m,n) = Σ(k=1 to min(m,n)) (m-k+1) × (n-k+1)
+                    </div>
+                    
+                    <p><strong>For a perfect square n×n:</strong></p>
+                    <div class="formula">
+                        S(n,n) = Σ(k=1 to n) (n-k+1)² = n(n+1)(2n+1)/6
+                    </div>
+                    
+                    <p><strong>Example for n=${sideLength}:</strong></p>
+                    <div class="formula">
+                        S(${sideLength},${sideLength}) = ${sideLength}×${sideLength+1}×${2*sideLength+1}/6 = ${maxSquares}
+                    </div>
+                </div>
+            `;
+
+            // Observation
+            const isPerfectSquare = Math.sqrt(area) === Math.floor(Math.sqrt(area));
+            if (isPerfectSquare) {
+                html += `
+                    <div class="observation">
+                        <h3>🎯 Key Observation</h3>
+                        <p><strong>The square configuration (${sideLength}×${sideLength}) maximizes the number of identifiable squares!</strong></p>
+                        <p>This is always true for perfect square areas. The more "square-like" a grid is (i.e., m and n are close), 
+                        the more squares it contains. Long thin rectangles have fewer identifiable squares.</p>
+                        <p><strong>Mathematical insight:</strong> For fixed area A, S(m,n) is maximized when m = n = √A, 
+                        because the sum of products (m-k+1)(n-k+1) is maximized when the factors are equal.</p>
+                    </div>
+                `;
+            }
+
+            resultsContent.innerHTML = html;
+        }
+
+        analyzeBtn.addEventListener('click', () => {
+            const sideLength = parseInt(sideLengthInput.value);
+            if (!isNaN(sideLength) && sideLength > 0) {
+                displayResults(sideLength);
+            }
+        });
+
+        // Auto-analyze on page load with default value
+        displayResults(parseInt(sideLengthInput.value));
+
+        // Allow Enter key to trigger analysis
+        sideLengthInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                analyzeBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>

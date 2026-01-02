@@ -12,6 +12,22 @@
 
 The answer is: **1×1365, 1365×1, 9×33, 33×9, 13×19, and 19×13 grids**
 
+## New Feature: Perfect Square Factorization Analysis
+
+A visual analysis tool has been added at `/perfect-square-analysis.html` that explores how different grid configurations affect the number of identifiable squares for a given area.
+
+**Key Insights:**
+- For a 20×20 perfect square (400 unit squares), there are 8 different ways to arrange it as an a×b grid
+- The square configuration (20×20) maximizes the number of identifiable squares (2870 squares)
+- Long thin rectangles (like 1×400) have the minimum number of squares (400 squares)
+- **Generic Formula for perfect squares:** S(n,n) = n(n+1)(2n+1)/6
+
+This interactive tool includes:
+- Visual bar chart comparing all factorizations
+- Detailed table with efficiency percentages
+- Generic mathematical formulas
+- Mathematical insights on why square configurations are optimal
+
 ## Mathematical Formula
 
 In an m×n grid, the total number of squares of all sizes is:
